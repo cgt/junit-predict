@@ -8,13 +8,10 @@ enum Prediction implements Predicate<Collection<TestResult>> {
 
     @Override
     public boolean test(Collection<TestResult> results) {
-        if (this == ALL_PASS) {
-            return results.stream().allMatch(x -> x == TestResult.PASS);
-        } else if (this == ANY_FAIL) {
-            return results.stream().anyMatch(x -> x == TestResult.FAIL);
-        } else if (this == SKIP) {
-            return true;
-        }
-        throw new IllegalStateException();
+        return switch (this) {
+            case ALL_PASS -> results.stream().allMatch(x -> x == TestResult.PASS);
+            case ANY_FAIL -> results.stream().anyMatch(x -> x == TestResult.FAIL);
+            case SKIP -> true;
+        };
     }
 }
