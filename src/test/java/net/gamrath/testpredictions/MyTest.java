@@ -15,4 +15,9 @@ class MyTest {
     void fails() {
         fail();
     }
+
+    @Test
+    void errors() {
+        throw new RuntimeException("not an assertion error");
+    }
 }
