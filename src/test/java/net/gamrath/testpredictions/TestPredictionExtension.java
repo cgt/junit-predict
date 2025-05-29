@@ -1,6 +1,9 @@
 package net.gamrath.testpredictions;
 
-import org.junit.jupiter.api.extension.*;
+import org.junit.jupiter.api.extension.AfterAllCallback;
+import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
+import org.junit.jupiter.api.extension.BeforeAllCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
 
 import javax.swing.*;
 import java.util.HashMap;
@@ -32,7 +35,7 @@ public class TestPredictionExtension implements BeforeAllCallback, AfterTestExec
                 prediction = ALL_PASS;
             } else if (result == JOptionPane.CLOSED_OPTION) {
                 prediction = SKIP;
-            }else {
+            } else {
                 throw new IllegalStateException("No prediction made. result=%d".formatted(result));
             }
         });
