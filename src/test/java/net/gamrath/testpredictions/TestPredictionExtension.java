@@ -30,7 +30,7 @@ public class TestPredictionExtension implements BeforeAllCallback, AfterTestExec
                 prediction = ANY_FAIL;
             } else if (result == 1) {
                 prediction = ALL_PASS;
-            } else if (result == -1) {
+            } else if (result == JOptionPane.CLOSED_OPTION) {
                 prediction = SKIP;
             }else {
                 throw new IllegalStateException("No prediction made. result=%d".formatted(result));
