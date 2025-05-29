@@ -22,11 +22,31 @@ class PredictionTest {
 
     @Test
     void anyFailHit() {
+        assertTrue(ANY_FAIL.test(List.of(TestResult.FAIL)));
         assertTrue(ANY_FAIL.test(List.of(TestResult.PASS, TestResult.FAIL)));
     }
 
     @Test
     void anyFailMiss() {
+        assertFalse(ANY_FAIL.test(List.of(TestResult.PASS)));
         assertFalse(ANY_FAIL.test(List.of(TestResult.PASS, TestResult.PASS)));
+    }
+
+    @Test
+    void allPassWhenThereAreNoTestsIsAHit() {
+        assertTrue(ALL_PASS.test(List.of()));
+    }
+
+    @Test
+    void anyFailWhenThereAreNoTestsIsAMiss() {
+        assertFalse(ANY_FAIL.test(List.of()));
+    }
+
+    @Test
+    void skipIsAlwaysAHit() {
+        assertTrue(Prediction.SKIP.test(List.of()));
+        assertTrue(Prediction.SKIP.test(List.of(TestResult.PASS)));
+        assertTrue(Prediction.SKIP.test(List.of(TestResult.FAIL)));
+        assertTrue(Prediction.SKIP.test(List.of(TestResult.PASS, TestResult.FAIL)));
     }
 }
