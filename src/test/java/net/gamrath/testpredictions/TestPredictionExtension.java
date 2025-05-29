@@ -23,13 +23,13 @@ public class TestPredictionExtension implements BeforeAllCallback, AfterTestExec
                     JOptionPane.DEFAULT_OPTION,
                     JOptionPane.QUESTION_MESSAGE,
                     null,
-                    new Object[]{"PASS", "FAIL"},
+                    new Object[]{"FAIL", "PASS"},
                     null
             );
             if (result == 0) {
-                prediction = ALL_PASS;
-            } else if (result == 1) {
                 prediction = ANY_FAIL;
+            } else if (result == 1) {
+                prediction = ALL_PASS;
             } else if (result == -1) {
                 prediction = SKIP;
             }else {
