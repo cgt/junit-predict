@@ -18,12 +18,12 @@ public class TestPredictionExtension implements BeforeAllCallback, AfterTestExec
         SwingUtilities.invokeAndWait(() -> {
             int result = JOptionPane.showOptionDialog(
                     null,
-                    "Do you predict that ALL tests will pass or that ANY will fail?",
+                    "Do you predict that ALL tests will PASS or that ANY will FAIL?",
                     "Call your shot!",
                     JOptionPane.DEFAULT_OPTION,
                     JOptionPane.QUESTION_MESSAGE,
                     null,
-                    new Object[]{"All will pass", "Any will fail"},
+                    new Object[]{"PASS", "FAIL"},
                     null
             );
             if (result == 0) {
