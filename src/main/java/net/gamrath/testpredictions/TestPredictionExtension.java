@@ -14,8 +14,6 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
 
-import static net.gamrath.testpredictions.Prediction.*;
-
 public class TestPredictionExtension implements BeforeAllCallback, AfterTestExecutionCallback, AfterAllCallback {
 
     private final Map<String, TestResult> resultByTestName = new HashMap<>();
@@ -35,11 +33,11 @@ public class TestPredictionExtension implements BeforeAllCallback, AfterTestExec
                     null
             );
             if (result == 0) {
-                prediction = ANY_FAIL;
+                prediction = Prediction.ANY_FAIL;
             } else if (result == 1) {
-                prediction = ALL_PASS;
+                prediction = Prediction.ALL_PASS;
             } else if (result == JOptionPane.CLOSED_OPTION) {
-                prediction = SKIP;
+                prediction = Prediction.SKIP;
             } else {
                 throw new IllegalStateException("No prediction made. result=%d".formatted(result));
             }
