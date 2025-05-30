@@ -12,10 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static net.gamrath.testpredictions.Prediction.*;
 
@@ -66,7 +63,11 @@ public class TestPredictionExtension implements BeforeAllCallback, AfterTestExec
 
         List<String> lines = Collections.emptyList();
         try {
-            lines = Files.readAllLines(logPath, StandardCharsets.UTF_8);
+            lines = Files
+                    .readAllLines(logPath, StandardCharsets.UTF_8)
+                    .stream()
+                    .filter(line -> !line.startsWith("STATS:"))
+                    .toList();
         } catch (NoSuchFileException ignored) {
         } catch (IOException e) {
             e.printStackTrace();
@@ -80,7 +81,6 @@ public class TestPredictionExtension implements BeforeAllCallback, AfterTestExec
                 misses++;
             }
         }
-        System.out.printf("Previous predictions for %s: %d hits, %d misses%n", testClass, hits, misses);
 
         final var hit = prediction.test(resultByTestName.values());
         JOptionPane.showMessageDialog(
@@ -91,13 +91,17 @@ public class TestPredictionExtension implements BeforeAllCallback, AfterTestExec
         );
 
         final var log = "%s,%s".formatted(prediction, hit);
+        final var newLines = new ArrayList<String>();
+        newLines.addAll(lines);
+        newLines.add(log);
+        newLines.add("STATS: hits=%d, misses=%d".formatted(hits + (hit ? 1 : 0), misses + (hit ? 0 : 1)));
         try {
             Files.writeString(
                     logPath,
-                    log + System.lineSeparator(),
+                    String.join(System.lineSeparator(), newLines) + System.lineSeparator(),
                     StandardCharsets.UTF_8,
                     StandardOpenOption.CREATE,
-                    StandardOpenOption.APPEND
+                    StandardOpenOption.TRUNCATE_EXISTING
             );
         } catch (IOException e) {
             System.err.printf("Failed to write prediction log: %s%n", e.getMessage());
