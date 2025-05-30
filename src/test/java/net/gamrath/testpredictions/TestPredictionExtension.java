@@ -66,5 +66,9 @@ public class TestPredictionExtension implements BeforeAllCallback, AfterTestExec
                     TestResult result = x.getValue();
                     System.out.printf("%s: %s%n", testName, result);
                 });
+
+        var testClass = context.getTestClass().map(x -> x.getCanonicalName()).orElseThrow();
+        var log = "%s,%s,%s".formatted(testClass, prediction, hit);
+        System.out.println(log);
     }
 }
