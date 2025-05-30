@@ -19,7 +19,7 @@ public class TestPredictionExtension implements BeforeAllCallback, AfterTestExec
     @Override
     public void beforeAll(ExtensionContext context) throws Exception {
         SwingUtilities.invokeAndWait(() -> {
-            var result = JOptionPane.showOptionDialog(
+            final var result = JOptionPane.showOptionDialog(
                     null,
                     "Do you predict that ALL tests will PASS or that ANY will FAIL?",
                     "Call your shot!",
@@ -43,14 +43,14 @@ public class TestPredictionExtension implements BeforeAllCallback, AfterTestExec
 
     @Override
     public void afterTestExecution(ExtensionContext context) {
-        var uniqueId = context.getUniqueId();
-        var testFailed = context.getExecutionException().isPresent();
+        final var uniqueId = context.getUniqueId();
+        final var testFailed = context.getExecutionException().isPresent();
         resultByTestName.put(uniqueId, testFailed ? TestResult.FAIL : TestResult.PASS);
     }
 
     @Override
     public void afterAll(ExtensionContext context) {
-        var hit = prediction.test(resultByTestName.values());
+        final var hit = prediction.test(resultByTestName.values());
         JOptionPane.showMessageDialog(
                 null,
                 hit ? "Hit" : "Miss",
@@ -62,13 +62,13 @@ public class TestPredictionExtension implements BeforeAllCallback, AfterTestExec
                 .stream()
                 .sorted(Map.Entry.comparingByKey())
                 .forEach(x -> {
-                    var testName = x.getKey();
-                    var result = x.getValue();
+                    final var testName = x.getKey();
+                    final var result = x.getValue();
                     System.out.printf("%s: %s%n", testName, result);
                 });
 
-        var testClass = context.getTestClass().map(x -> x.getCanonicalName()).orElseThrow();
-        var log = "%s,%s,%s".formatted(testClass, prediction, hit);
+        final var testClass = context.getTestClass().map(x -> x.getCanonicalName()).orElseThrow();
+        final var log = "%s,%s,%s".formatted(testClass, prediction, hit);
         System.out.println(log);
     }
 }
