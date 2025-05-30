@@ -1,11 +1,13 @@
 package net.gamrath.testpredictions;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
 @ExtendWith(TestPredictionExtension.class)
+@Disabled("For demonstration")
 class MyTest {
     @Test
     void passes() {
