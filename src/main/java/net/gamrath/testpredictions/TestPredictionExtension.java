@@ -90,8 +90,7 @@ public class TestPredictionExtension implements BeforeAllCallback, AfterTestExec
         );
 
         final var log = "%s,%s".formatted(prediction, hit);
-        final var newLines = new ArrayList<String>();
-        newLines.addAll(lines);
+        final var newLines = new ArrayList<>(lines);
         newLines.add(log);
         newLines.add("STATS: hits=%d, misses=%d".formatted(hits + (hit ? 1 : 0), misses + (hit ? 0 : 1)));
         try {
