@@ -1,4 +1,4 @@
-package net.gamrath.testpredictions;
+package net.gamrath.junitpredict;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;

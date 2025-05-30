@@ -1,11 +1,11 @@
-package net.gamrath.testpredictions;
+package net.gamrath.junitpredict;
 
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static net.gamrath.testpredictions.Prediction.ALL_PASS;
-import static net.gamrath.testpredictions.Prediction.ANY_FAIL;
+import static net.gamrath.junitpredict.Prediction.ALL_PASS;
+import static net.gamrath.junitpredict.Prediction.ANY_FAIL;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

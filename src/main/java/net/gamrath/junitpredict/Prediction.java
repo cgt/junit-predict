@@ -1,4 +1,4 @@
-package net.gamrath.testpredictions;
+package net.gamrath.junitpredict;
 
 import java.util.Collection;
 import java.util.function.Predicate;

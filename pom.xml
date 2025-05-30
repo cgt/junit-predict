@@ -5,13 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.gamrath.testpredictions</groupId>
-    <artifactId>junit-test-predictions</artifactId>
+    <artifactId>junit-predict</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>JUnit Test Predictions</name>
+    <name>JUnit Predict</name>
     <description>A JUnit 5 extension for predicting test outcomes interactively.</description>
-    <url>https://github.com/cgt/junit-test-predictions</url>
+    <url>https://github.com/cgt/junit-predict</url>
 
     <licenses>
         <license>
@@ -29,9 +29,9 @@
     </developers>
 
     <scm>
-        <url>https://github.com/cgt/junit-test-predictions</url>
-        <connection>scm:git:git://github.com/cgt/junit-test-predictions.git</connection>
-        <developerConnection>scm:git:ssh://github.com:cgt/junit-test-predictions.git</developerConnection>
+        <url>https://github.com/cgt/junit-predict</url>
+        <connection>scm:git:git://github.com/cgt/junit-predict.git</connection>
+        <developerConnection>scm:git:ssh://github.com:cgt/junit-predict.git</developerConnection>
     </scm>
 
     <properties>
