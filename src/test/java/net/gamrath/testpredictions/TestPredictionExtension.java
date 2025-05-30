@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.HashMap;
@@ -55,6 +56,29 @@ public class TestPredictionExtension implements BeforeAllCallback, AfterTestExec
 
     @Override
     public void afterAll(ExtensionContext context) {
+        final var testClass = context.getRequiredTestClass().getCanonicalName();
+        final var logPath = Path.of(System.getProperty("java.io.tmpdir"), "predictions-%s.csv".formatted(testClass));
+
+        int hits = 0;
+        int misses = 0;
+
+        try {
+            final var lines = Files.readAllLines(logPath, StandardCharsets.UTF_8);
+            for (String line : lines) {
+                final var parts = line.split(",");
+                final var hit = Boolean.parseBoolean(parts[2]);
+                if (hit) {
+                    hits++;
+                } else {
+                    misses++;
+                }
+            }
+            System.out.printf("Previous predictions for %s: %d hits, %d misses%n", testClass, hits, misses);
+        } catch (NoSuchFileException ignored) {
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         final var hit = prediction.test(resultByTestName.values());
         JOptionPane.showMessageDialog(
                 null,
@@ -72,11 +96,10 @@ public class TestPredictionExtension implements BeforeAllCallback, AfterTestExec
                     System.out.printf("%s: %s%n", testName, result);
                 });
 
-        final var testClass = context.getRequiredTestClass().getCanonicalName();
         final var log = "%s,%s,%s".formatted(testClass, prediction, hit);
         try {
             Files.writeString(
-                    Path.of(System.getProperty("java.io.tmpdir"), "predictions-%s.csv".formatted(testClass)),
+                    logPath,
                     log + System.lineSeparator(),
                     StandardCharsets.UTF_8,
                     StandardOpenOption.CREATE,
