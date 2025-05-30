@@ -57,7 +57,7 @@ public class TestPredictionExtension implements BeforeAllCallback, AfterTestExec
     @Override
     public void afterAll(ExtensionContext context) {
         final var testClass = context.getRequiredTestClass().getCanonicalName();
-        final var logPath = Path.of(System.getProperty("java.io.tmpdir"), "predictions-%s.csv".formatted(testClass));
+        final var logPath = Path.of("predictions-%s.csv".formatted(testClass));
 
         int hits = 0;
         int misses = 0;
