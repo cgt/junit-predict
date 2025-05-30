@@ -6,6 +6,11 @@ import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
 import javax.swing.*;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -69,6 +74,17 @@ public class TestPredictionExtension implements BeforeAllCallback, AfterTestExec
 
         final var testClass = context.getRequiredTestClass().getCanonicalName();
         final var log = "%s,%s,%s".formatted(testClass, prediction, hit);
-        System.out.println(log);
+        try {
+            Files.writeString(
+                    Path.of("predictions-%s.csv".formatted(testClass)),
+                    log + System.lineSeparator(),
+                    StandardCharsets.UTF_8,
+                    StandardOpenOption.CREATE,
+                    StandardOpenOption.APPEND
+            );
+        } catch (IOException e) {
+            System.err.printf("Failed to write prediction log: %s%n", e.getMessage());
+            e.printStackTrace();
+        }
     }
 }
