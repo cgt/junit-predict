@@ -66,7 +66,7 @@ public class TestPredictionExtension implements BeforeAllCallback, AfterTestExec
             final var lines = Files.readAllLines(logPath, StandardCharsets.UTF_8);
             for (String line : lines) {
                 final var parts = line.split(",");
-                final var hit = Boolean.parseBoolean(parts[2]);
+                final var hit = Boolean.parseBoolean(parts[1]);
                 if (hit) {
                     hits++;
                 } else {
@@ -96,7 +96,7 @@ public class TestPredictionExtension implements BeforeAllCallback, AfterTestExec
                     System.out.printf("%s: %s%n", testName, result);
                 });
 
-        final var log = "%s,%s,%s".formatted(testClass, prediction, hit);
+        final var log = "%s,%s".formatted(prediction, hit);
         try {
             Files.writeString(
                     logPath,
