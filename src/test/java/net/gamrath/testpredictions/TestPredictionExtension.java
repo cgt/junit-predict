@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,23 +64,23 @@ public class TestPredictionExtension implements BeforeAllCallback, AfterTestExec
         int hits = 0;
         int misses = 0;
 
+        List<String> lines = Collections.emptyList();
         try {
-            final List<String> lines;
             lines = Files.readAllLines(logPath, StandardCharsets.UTF_8);
-            for (String line : lines) {
-                final var parts = line.split(",");
-                final var hit = Boolean.parseBoolean(parts[1]);
-                if (hit) {
-                    hits++;
-                } else {
-                    misses++;
-                }
-            }
-            System.out.printf("Previous predictions for %s: %d hits, %d misses%n", testClass, hits, misses);
         } catch (NoSuchFileException ignored) {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        for (String line : lines) {
+            final var parts = line.split(",");
+            final var hit = Boolean.parseBoolean(parts[1]);
+            if (hit) {
+                hits++;
+            } else {
+                misses++;
+            }
+        }
+        System.out.printf("Previous predictions for %s: %d hits, %d misses%n", testClass, hits, misses);
 
         final var hit = prediction.test(resultByTestName.values());
         JOptionPane.showMessageDialog(
