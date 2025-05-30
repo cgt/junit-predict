@@ -76,7 +76,7 @@ public class TestPredictionExtension implements BeforeAllCallback, AfterTestExec
         final var log = "%s,%s,%s".formatted(testClass, prediction, hit);
         try {
             Files.writeString(
-                    Path.of("predictions-%s.csv".formatted(testClass)),
+                    Path.of(System.getProperty("java.io.tmpdir"), "predictions-%s.csv".formatted(testClass)),
                     log + System.lineSeparator(),
                     StandardCharsets.UTF_8,
                     StandardOpenOption.CREATE,
