@@ -13,6 +13,7 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static net.gamrath.testpredictions.Prediction.*;
@@ -63,7 +64,8 @@ public class TestPredictionExtension implements BeforeAllCallback, AfterTestExec
         int misses = 0;
 
         try {
-            final var lines = Files.readAllLines(logPath, StandardCharsets.UTF_8);
+            final List<String> lines;
+            lines = Files.readAllLines(logPath, StandardCharsets.UTF_8);
             for (String line : lines) {
                 final var parts = line.split(",");
                 final var hit = Boolean.parseBoolean(parts[1]);
