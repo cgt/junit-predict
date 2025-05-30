@@ -89,15 +89,6 @@ public class TestPredictionExtension implements BeforeAllCallback, AfterTestExec
                 "Prediction Result",
                 hit ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE
         );
-        resultByTestName
-                .entrySet()
-                .stream()
-                .sorted(Map.Entry.comparingByKey())
-                .forEach(x -> {
-                    final var testName = x.getKey();
-                    final var result = x.getValue();
-                    System.out.printf("%s: %s%n", testName, result);
-                });
 
         final var log = "%s,%s".formatted(prediction, hit);
         try {
