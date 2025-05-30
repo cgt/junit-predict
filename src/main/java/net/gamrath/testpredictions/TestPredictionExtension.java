@@ -51,6 +51,7 @@ public class TestPredictionExtension implements BeforeAllCallback, AfterTestExec
         resultByTestName.put(uniqueId, testFailed ? TestResult.FAIL : TestResult.PASS);
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     @Override
     public void afterAll(ExtensionContext context) {
         final var testClass = context.getRequiredTestClass().getCanonicalName();
