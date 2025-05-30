@@ -67,7 +67,7 @@ public class TestPredictionExtension implements BeforeAllCallback, AfterTestExec
                     System.out.printf("%s: %s%n", testName, result);
                 });
 
-        final var testClass = context.getTestClass().map(Class::getCanonicalName).orElseThrow();
+        final var testClass = context.getRequiredTestClass().getCanonicalName();
         final var log = "%s,%s,%s".formatted(testClass, prediction, hit);
         System.out.println(log);
     }
