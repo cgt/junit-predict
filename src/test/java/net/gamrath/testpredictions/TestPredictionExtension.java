@@ -19,7 +19,7 @@ public class TestPredictionExtension implements BeforeAllCallback, AfterTestExec
     @Override
     public void beforeAll(ExtensionContext context) throws Exception {
         SwingUtilities.invokeAndWait(() -> {
-            int result = JOptionPane.showOptionDialog(
+            var result = JOptionPane.showOptionDialog(
                     null,
                     "Do you predict that ALL tests will PASS or that ANY will FAIL?",
                     "Call your shot!",
@@ -43,8 +43,8 @@ public class TestPredictionExtension implements BeforeAllCallback, AfterTestExec
 
     @Override
     public void afterTestExecution(ExtensionContext context) {
-        String uniqueId = context.getUniqueId();
-        boolean testFailed = context.getExecutionException().isPresent();
+        var uniqueId = context.getUniqueId();
+        var testFailed = context.getExecutionException().isPresent();
         resultByTestName.put(uniqueId, testFailed ? TestResult.FAIL : TestResult.PASS);
     }
 
@@ -62,8 +62,8 @@ public class TestPredictionExtension implements BeforeAllCallback, AfterTestExec
                 .stream()
                 .sorted(Map.Entry.comparingByKey())
                 .forEach(x -> {
-                    String testName = x.getKey();
-                    TestResult result = x.getValue();
+                    var testName = x.getKey();
+                    var result = x.getValue();
                     System.out.printf("%s: %s%n", testName, result);
                 });
 
