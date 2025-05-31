@@ -14,6 +14,11 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
 
+/**
+ * A JUnit 5 extension that prompts the user to predict the outcome of tests before they run.
+ * It records whether the prediction was a hit or a miss and writes the results to a log file
+ * in the working directory (typically the project root).
+ */
 public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, AfterAllCallback {
 
     private final Map<String, TestResult> resultByTestName = new HashMap<>();
