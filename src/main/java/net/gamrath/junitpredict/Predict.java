@@ -14,7 +14,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
 
-public class TestPredictionExtension implements BeforeAllCallback, AfterTestExecutionCallback, AfterAllCallback {
+public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, AfterAllCallback {
 
     private final Map<String, TestResult> resultByTestName = new HashMap<>();
     private Prediction prediction = null;
