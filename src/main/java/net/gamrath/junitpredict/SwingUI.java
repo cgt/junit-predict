@@ -9,7 +9,16 @@ class SwingUI implements UI {
     public Prediction promptForPrediction() {
         final var prediction = new AtomicReference<Prediction>();
         invokeUnchecked(() -> {
-            final var choice = JOptionPane.showOptionDialog(null, "Do you predict that ALL tests will PASS or that ANY will FAIL?", "Call your shot!", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"FAIL", "PASS"}, null);
+            final var choice = JOptionPane.showOptionDialog(
+                    null,
+                    "Do you predict that ALL tests will PASS or that ANY will FAIL?",
+                    "Call your shot!",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    new Object[]{"FAIL", "PASS"},
+                    null
+            );
             Prediction result;
             if (choice == 0) {
                 result = Prediction.ANY_FAIL;
