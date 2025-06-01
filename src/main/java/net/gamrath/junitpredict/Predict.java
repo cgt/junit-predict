@@ -22,7 +22,7 @@ import java.util.*;
 public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, AfterAllCallback {
 
     private final Map<String, TestResult> resultByTestName = new HashMap<>();
-    private final UI ui = new UI();
+    private final UI ui = new SwingUI();
     private Prediction prediction = null;
 
     @Override
