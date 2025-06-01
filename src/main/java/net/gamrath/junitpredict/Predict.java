@@ -27,28 +27,33 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
     @Override
     public void beforeAll(ExtensionContext context) throws Exception {
         SwingUtilities.invokeAndWait(() -> {
-            final var result = JOptionPane.showOptionDialog(
-                    null,
-                    "Do you predict that ALL tests will PASS or that ANY will FAIL?",
-                    "Call your shot!",
-                    JOptionPane.DEFAULT_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
-                    null,
-                    new Object[]{"FAIL", "PASS"},
-                    null
-            );
-            Prediction prediction;
-            if (result == 0) {
-                prediction = Prediction.ANY_FAIL;
-            } else if (result == 1) {
-                prediction = Prediction.ALL_PASS;
-            } else if (result == JOptionPane.CLOSED_OPTION) {
-                prediction = Prediction.SKIP;
-            } else {
-                throw new IllegalStateException("No prediction made. result=%d".formatted(result));
-            }
+            var prediction = promptForPrediction();
             this.prediction = prediction;
         });
+    }
+
+    private static Prediction promptForPrediction() {
+        final var result = JOptionPane.showOptionDialog(
+                null,
+                "Do you predict that ALL tests will PASS or that ANY will FAIL?",
+                "Call your shot!",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                new Object[]{"FAIL", "PASS"},
+                null
+        );
+        Prediction prediction;
+        if (result == 0) {
+            prediction = Prediction.ANY_FAIL;
+        } else if (result == 1) {
+            prediction = Prediction.ALL_PASS;
+        } else if (result == JOptionPane.CLOSED_OPTION) {
+            prediction = Prediction.SKIP;
+        } else {
+            throw new IllegalStateException("No prediction made. result=%d".formatted(result));
+        }
+        return prediction;
     }
 
     @Override
