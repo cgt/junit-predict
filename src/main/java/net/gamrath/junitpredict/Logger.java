@@ -3,7 +3,7 @@ package net.gamrath.junitpredict;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Logger {
+class Logger {
     static ArrayList<String> createLog(List<String> lines, boolean hit, final Prediction prediction) {
         var hits = 0;
         var misses = 0;
