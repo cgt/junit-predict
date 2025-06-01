@@ -68,6 +68,7 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
         writeLogFile(logPath, newLines);
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     private static void writeLogFile(Path logPath, ArrayList<String> newLines) {
         try {
             Files.writeString(
