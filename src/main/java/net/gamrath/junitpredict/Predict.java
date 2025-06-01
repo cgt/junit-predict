@@ -49,11 +49,11 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
         final var logPath = Path.of("predictions-%s.csv".formatted(testClass));
 
         final var lines = readLogFile(logPath);
-        final var newLines = createLog(lines, hit);
+        final var newLines = createLog(this, lines, hit);
         writeLogFile(logPath, newLines);
     }
 
-    private ArrayList<String> createLog(List<String> lines, boolean hit) {
+    private static ArrayList<String> createLog(Predict self, List<String> lines, boolean hit) {
         var hits = 0;
         var misses = 0;
         for (final var line : lines) {
@@ -66,7 +66,7 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
             }
         }
 
-        final var log = formatLogLine(this.prediction, hit);
+        final var log = formatLogLine(self.prediction, hit);
         final var newLines = new ArrayList<>(lines);
         newLines.add(log);
         newLines.add(formatStatsLine(hits + (hit ? 1 : 0), misses + (hit ? 0 : 1)));
