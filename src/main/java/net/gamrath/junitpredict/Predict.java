@@ -83,7 +83,7 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
     private static List<String> readLogFile(Path logPath) {
         List<String> lines = Collections.emptyList();
         try {
-            lines = Files
+            return Files
                     .readAllLines(logPath, StandardCharsets.UTF_8)
                     .stream()
                     .filter(line -> !line.startsWith("STATS:"))
