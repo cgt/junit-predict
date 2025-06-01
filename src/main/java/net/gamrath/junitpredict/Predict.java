@@ -72,7 +72,7 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
 
     @SuppressWarnings("CallToPrintStackTrace")
     @Override
-    public void afterAll(ExtensionContext context) {
+    public void afterAll(ExtensionContext context) throws InterruptedException, InvocationTargetException {
         final var testClass = context.getRequiredTestClass().getCanonicalName();
         final var logPath = Path.of("predictions-%s.csv".formatted(testClass));
 
@@ -100,11 +100,13 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
         }
 
         final var hit = prediction.test(resultByTestName.values());
-        JOptionPane.showMessageDialog(
-                null,
-                hit ? "Hit" : "Miss",
-                "Prediction Result",
-                hit ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE
+        SwingUtilities.invokeAndWait(() ->
+                JOptionPane.showMessageDialog(
+                        null,
+                        hit ? "Hit" : "Miss",
+                        "Prediction Result",
+                        hit ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE
+                )
         );
 
         final var log = "%s,%s".formatted(prediction, hit);
