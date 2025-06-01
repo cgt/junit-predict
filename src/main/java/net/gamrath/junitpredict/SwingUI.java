@@ -50,7 +50,9 @@ class SwingUI implements UI {
     private static void invokeUnchecked(Runnable r) {
         try {
             SwingUtilities.invokeAndWait(r);
-        } catch (InterruptedException | InvocationTargetException e) {
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
             throw new RuntimeException(e);
         }
     }
