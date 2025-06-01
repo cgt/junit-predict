@@ -5,7 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.atomic.AtomicReference;
 
 class UI {
-    Prediction promptForPrediction2() throws InterruptedException, InvocationTargetException {
+    Prediction promptForPrediction() throws InterruptedException, InvocationTargetException {
         final var prediction = new AtomicReference<Prediction>();
         SwingUtilities.invokeAndWait(() -> {
             final var choice = JOptionPane.showOptionDialog(

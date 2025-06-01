@@ -27,7 +27,7 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
 
     @Override
     public void beforeAll(ExtensionContext context) throws Exception {
-        this.prediction = ui.promptForPrediction2();
+        this.prediction = ui.promptForPrediction();
     }
 
     @Override
