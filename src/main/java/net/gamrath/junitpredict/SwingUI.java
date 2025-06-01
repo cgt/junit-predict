@@ -35,7 +35,7 @@ class SwingUI implements UI {
     }
 
     @Override
-    public void displayHitOrMissDialog(boolean hit) throws InterruptedException, InvocationTargetException {
+    public void displayHitOrMiss(boolean hit) throws InterruptedException, InvocationTargetException {
         SwingUtilities.invokeAndWait(() ->
                 JOptionPane.showMessageDialog(
                         null,

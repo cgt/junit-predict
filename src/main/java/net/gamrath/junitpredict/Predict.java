@@ -71,7 +71,7 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
         }
 
         final var hit = prediction.test(resultByTestName.values());
-        ui.displayHitOrMissDialog(hit);
+        ui.displayHitOrMiss(hit);
 
         final var log = "%s,%s".formatted(prediction, hit);
         final var newLines = new ArrayList<>(lines);
