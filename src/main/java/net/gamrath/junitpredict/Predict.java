@@ -5,7 +5,6 @@ import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
@@ -14,7 +13,6 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * A JUnit 5 extension that prompts the user to predict the outcome of tests before they run.
@@ -24,39 +22,12 @@ import java.util.concurrent.atomic.AtomicReference;
 public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, AfterAllCallback {
 
     private final Map<String, TestResult> resultByTestName = new HashMap<>();
+    private final UI ui = new UI();
     private Prediction prediction = null;
 
     @Override
     public void beforeAll(ExtensionContext context) throws Exception {
-        this.prediction = promptForPrediction2();
-    }
-
-    private Prediction promptForPrediction2() throws InterruptedException, InvocationTargetException {
-        var p = new AtomicReference<Prediction>();
-        SwingUtilities.invokeAndWait(() -> {
-            final var choice = JOptionPane.showOptionDialog(
-                    null,
-                    "Do you predict that ALL tests will PASS or that ANY will FAIL?",
-                    "Call your shot!",
-                    JOptionPane.DEFAULT_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
-                    null,
-                    new Object[]{"FAIL", "PASS"},
-                    null
-            );
-            Prediction result;
-            if (choice == 0) {
-                result = Prediction.ANY_FAIL;
-            } else if (choice == 1) {
-                result = Prediction.ALL_PASS;
-            } else if (choice == JOptionPane.CLOSED_OPTION) {
-                result = Prediction.SKIP;
-            } else {
-                throw new IllegalStateException("No prediction made. result=%d".formatted(choice));
-            }
-            p.set(result);
-        });
-        return p.get();
+        this.prediction = ui.promptForPrediction2();
     }
 
     @Override
@@ -100,7 +71,7 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
         }
 
         final var hit = prediction.test(resultByTestName.values());
-        displayHitOrMissDialog(hit);
+        ui.displayHitOrMissDialog(hit);
 
         final var log = "%s,%s".formatted(prediction, hit);
         final var newLines = new ArrayList<>(lines);
@@ -120,14 +91,4 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
         }
     }
 
-    private void displayHitOrMissDialog(boolean hit) throws InterruptedException, InvocationTargetException {
-        SwingUtilities.invokeAndWait(() ->
-                JOptionPane.showMessageDialog(
-                        null,
-                        hit ? "Hit" : "Miss",
-                        "Prediction Result",
-                        hit ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE
-                )
-        );
-    }
 }
