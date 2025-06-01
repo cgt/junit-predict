@@ -64,8 +64,12 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
         final var log = "%s,%s".formatted(prediction, hit);
         final var newLines = new ArrayList<>(lines);
         newLines.add(log);
-        newLines.add("STATS: hits=%d, misses=%d".formatted(hits + (hit ? 1 : 0), misses + (hit ? 0 : 1)));
+        newLines.add(formatStatsLine(hits, hit, misses));
         writeLogFile(logPath, newLines);
+    }
+
+    private static String formatStatsLine(int hits, boolean hit, int misses) {
+        return "STATS: hits=%d, misses=%d".formatted(hits + (hit ? 1 : 0), misses + (hit ? 0 : 1));
     }
 
     @SuppressWarnings("CallToPrintStackTrace")
