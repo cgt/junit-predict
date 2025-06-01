@@ -100,14 +100,7 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
         }
 
         final var hit = prediction.test(resultByTestName.values());
-        SwingUtilities.invokeAndWait(() ->
-                JOptionPane.showMessageDialog(
-                        null,
-                        hit ? "Hit" : "Miss",
-                        "Prediction Result",
-                        hit ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE
-                )
-        );
+        displayHitOrMissDialog(hit);
 
         final var log = "%s,%s".formatted(prediction, hit);
         final var newLines = new ArrayList<>(lines);
@@ -125,5 +118,16 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
             System.err.printf("Failed to write prediction log: %s%n", e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    private static void displayHitOrMissDialog(boolean hit) throws InterruptedException, InvocationTargetException {
+        SwingUtilities.invokeAndWait(() ->
+                JOptionPane.showMessageDialog(
+                        null,
+                        hit ? "Hit" : "Miss",
+                        "Prediction Result",
+                        hit ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE
+                )
+        );
     }
 }
