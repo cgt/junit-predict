@@ -76,7 +76,7 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
         } catch (IOException e) {
             e.printStackTrace();
         }
-        for (var line : lines) {
+        for (final var line : lines) {
             final var parts = line.split(",");
             final var hit = Boolean.parseBoolean(parts[1]);
             if (hit) {
