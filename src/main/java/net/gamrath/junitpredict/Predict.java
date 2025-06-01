@@ -50,8 +50,8 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
         var misses = 0;
         for (final var line : lines) {
             final var parts = line.split(",");
-            final var hit = Boolean.parseBoolean(parts[1]);
-            if (hit) {
+            final var isHit = Boolean.parseBoolean(parts[1]);
+            if (isHit) {
                 hits++;
             } else {
                 misses++;
