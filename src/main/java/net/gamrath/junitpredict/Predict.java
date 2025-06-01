@@ -27,8 +27,7 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
     @Override
     public void beforeAll(ExtensionContext context) throws Exception {
         SwingUtilities.invokeAndWait(() -> {
-            var prediction = promptForPrediction();
-            this.prediction = prediction;
+            this.prediction = promptForPrediction();
         });
     }
 
