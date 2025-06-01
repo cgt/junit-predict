@@ -33,32 +33,21 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
 
     private void promptForPrediction2() throws InterruptedException, InvocationTargetException {
         var p = new AtomicReference<Prediction>();
-        SwingUtilities.invokeAndWait(() ->
-                p.set(promptForPrediction())
-        );
+        SwingUtilities.invokeAndWait(() -> {
+            Prediction res;
+            final var result = JOptionPane.showOptionDialog(null, "Do you predict that ALL tests will PASS or that ANY will FAIL?", "Call your shot!", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"FAIL", "PASS"}, null);
+            if (result == 0) {
+                res = Prediction.ANY_FAIL;
+            } else if (result == 1) {
+                res = Prediction.ALL_PASS;
+            } else if (result == JOptionPane.CLOSED_OPTION) {
+                res = Prediction.SKIP;
+            } else {
+                throw new IllegalStateException("No prediction made. result=%d".formatted(result));
+            }
+            p.set(res);
+        });
         this.prediction = p.get();
-    }
-
-    private static Prediction promptForPrediction() {
-        final var result = JOptionPane.showOptionDialog(
-                null,
-                "Do you predict that ALL tests will PASS or that ANY will FAIL?",
-                "Call your shot!",
-                JOptionPane.DEFAULT_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                new Object[]{"FAIL", "PASS"},
-                null
-        );
-        if (result == 0) {
-            return Prediction.ANY_FAIL;
-        } else if (result == 1) {
-            return Prediction.ALL_PASS;
-        } else if (result == JOptionPane.CLOSED_OPTION) {
-            return Prediction.SKIP;
-        } else {
-            throw new IllegalStateException("No prediction made. result=%d".formatted(result));
-        }
     }
 
     @Override
