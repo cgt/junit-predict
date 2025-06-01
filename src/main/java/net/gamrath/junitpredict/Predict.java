@@ -13,6 +13,7 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * A JUnit 5 extension that prompts the user to predict the outcome of tests before they run.
@@ -26,9 +27,11 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
 
     @Override
     public void beforeAll(ExtensionContext context) throws Exception {
+        var p = new AtomicReference<Prediction>();
         SwingUtilities.invokeAndWait(() ->
-                this.prediction = promptForPrediction()
+                p.set(promptForPrediction())
         );
+        this.prediction = p.get();
     }
 
     private static Prediction promptForPrediction() {
