@@ -93,5 +93,4 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
         }
         return Collections.emptyList();
     }
-
 }
