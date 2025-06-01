@@ -62,9 +62,6 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
         final var testClass = context.getRequiredTestClass().getCanonicalName();
         final var logPath = Path.of("predictions-%s.csv".formatted(testClass));
 
-        var hits = 0;
-        var misses = 0;
-
         List<String> lines = Collections.emptyList();
         try {
             lines = Files
@@ -76,6 +73,8 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
         } catch (IOException e) {
             e.printStackTrace();
         }
+        var hits = 0;
+        var misses = 0;
         for (final var line : lines) {
             final var parts = line.split(",");
             final var hit = Boolean.parseBoolean(parts[1]);
