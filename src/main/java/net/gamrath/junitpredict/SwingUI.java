@@ -47,6 +47,10 @@ class SwingUI implements UI {
                         "Prediction Result",
                         hit ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE
                 );
+        invokeUnchecked(r);
+    }
+
+    private static void invokeUnchecked(Runnable r) {
         try {
             SwingUtilities.invokeAndWait(r);
         } catch (InterruptedException | InvocationTargetException e) {
