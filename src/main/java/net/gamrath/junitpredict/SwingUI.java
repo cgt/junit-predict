@@ -40,14 +40,14 @@ class SwingUI implements UI {
 
     @Override
     public void displayHitOrMiss(boolean hit) {
-        final Runnable r = () ->
+        invokeUnchecked(() ->
                 JOptionPane.showMessageDialog(
                         null,
                         hit ? "Hit" : "Miss",
                         "Prediction Result",
                         hit ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE
-                );
-        invokeUnchecked(r);
+                )
+        );
     }
 
     private static void invokeUnchecked(Runnable r) {
