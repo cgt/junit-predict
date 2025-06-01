@@ -31,7 +31,7 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
         this.prediction = promptForPrediction2();
     }
 
-    private static Prediction promptForPrediction2() throws InterruptedException, InvocationTargetException {
+    private Prediction promptForPrediction2() throws InterruptedException, InvocationTargetException {
         var p = new AtomicReference<Prediction>();
         SwingUtilities.invokeAndWait(() -> {
             final var choice = JOptionPane.showOptionDialog(
