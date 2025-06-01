@@ -46,17 +46,7 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
         final var testClass = context.getRequiredTestClass().getCanonicalName();
         final var logPath = Path.of("predictions-%s.csv".formatted(testClass));
 
-        List<String> lines = Collections.emptyList();
-        try {
-            lines = Files
-                    .readAllLines(logPath, StandardCharsets.UTF_8)
-                    .stream()
-                    .filter(line -> !line.startsWith("STATS:"))
-                    .toList();
-        } catch (NoSuchFileException ignored) {
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        final var lines = readLogFile(logPath);
         var hits = 0;
         var misses = 0;
         for (final var line : lines) {
@@ -88,6 +78,21 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
             System.err.printf("Failed to write prediction log: %s%n", e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    private static List<String> readLogFile(Path logPath) {
+        List<String> lines = Collections.emptyList();
+        try {
+            lines = Files
+                    .readAllLines(logPath, StandardCharsets.UTF_8)
+                    .stream()
+                    .filter(line -> !line.startsWith("STATS:"))
+                    .toList();
+        } catch (NoSuchFileException ignored) {
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return lines;
     }
 
 }
