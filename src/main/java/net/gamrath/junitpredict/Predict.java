@@ -81,7 +81,6 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
 
     @SuppressWarnings("CallToPrintStackTrace")
     private static List<String> readLogFile(Path logPath) {
-        List<String> lines = Collections.emptyList();
         try {
             return Files
                     .readAllLines(logPath, StandardCharsets.UTF_8)
@@ -92,7 +91,7 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return lines;
+        return Collections.emptyList();
     }
 
 }
