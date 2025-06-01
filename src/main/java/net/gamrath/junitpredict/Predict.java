@@ -42,6 +42,9 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
 
     @Override
     public void afterAll(ExtensionContext context) {
+        final var hit = prediction.test(resultByTestName.values());
+        ui.displayHitOrMiss(hit);
+
         final var testClass = context.getRequiredTestClass().getCanonicalName();
         final var logPath = Path.of("predictions-%s.csv".formatted(testClass));
 
@@ -57,9 +60,6 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
                 misses++;
             }
         }
-
-        final var hit = prediction.test(resultByTestName.values());
-        ui.displayHitOrMiss(hit);
 
         final var log = formatLogLine(this.prediction, hit);
         final var newLines = new ArrayList<>(lines);
