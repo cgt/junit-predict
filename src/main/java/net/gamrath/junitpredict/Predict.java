@@ -35,15 +35,15 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
         var p = new AtomicReference<Prediction>();
         SwingUtilities.invokeAndWait(() -> {
             Prediction res;
-            final var result = JOptionPane.showOptionDialog(null, "Do you predict that ALL tests will PASS or that ANY will FAIL?", "Call your shot!", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"FAIL", "PASS"}, null);
-            if (result == 0) {
+            final var choice = JOptionPane.showOptionDialog(null, "Do you predict that ALL tests will PASS or that ANY will FAIL?", "Call your shot!", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"FAIL", "PASS"}, null);
+            if (choice == 0) {
                 res = Prediction.ANY_FAIL;
-            } else if (result == 1) {
+            } else if (choice == 1) {
                 res = Prediction.ALL_PASS;
-            } else if (result == JOptionPane.CLOSED_OPTION) {
+            } else if (choice == JOptionPane.CLOSED_OPTION) {
                 res = Prediction.SKIP;
             } else {
-                throw new IllegalStateException("No prediction made. result=%d".formatted(result));
+                throw new IllegalStateException("No prediction made. result=%d".formatted(choice));
             }
             p.set(res);
         });
