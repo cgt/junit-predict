@@ -1,7 +1,9 @@
 package net.gamrath.junitpredict;
 
 import javax.swing.*;
+import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 class SwingUI implements UI {
@@ -32,7 +34,7 @@ class SwingUI implements UI {
             }
             prediction.set(result);
         });
-        return prediction.get();
+        return Optional.ofNullable(prediction.get()).orElse(Prediction.SKIP);
     }
 
     @Override
@@ -53,7 +55,12 @@ class SwingUI implements UI {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         } catch (InvocationTargetException e) {
-            throw new RuntimeException(e);
+            // headless
+            if (e.getCause() instanceof HeadlessException) {
+                // do nothing
+            } else {
+                throw new RuntimeException(e);
+            }
         }
     }
 }
