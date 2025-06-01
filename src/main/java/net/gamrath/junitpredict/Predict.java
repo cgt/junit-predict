@@ -68,6 +68,21 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
         writeLogFile(logPath, newLines);
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
+    private static List<String> readLogFile(Path logPath) {
+        try {
+            return Files
+                    .readAllLines(logPath, StandardCharsets.UTF_8)
+                    .stream()
+                    .filter(line -> !line.startsWith("STATS:"))
+                    .toList();
+        } catch (NoSuchFileException ignored) {
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return Collections.emptyList();
+    }
+
     private static String formatStatsLine(final int hits, final int misses) {
         return "STATS: hits=%d, misses=%d".formatted(hits, misses);
     }
@@ -86,20 +101,5 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
             System.err.printf("Failed to write prediction log: %s%n", e.getMessage());
             e.printStackTrace();
         }
-    }
-
-    @SuppressWarnings("CallToPrintStackTrace")
-    private static List<String> readLogFile(Path logPath) {
-        try {
-            return Files
-                    .readAllLines(logPath, StandardCharsets.UTF_8)
-                    .stream()
-                    .filter(line -> !line.startsWith("STATS:"))
-                    .toList();
-        } catch (NoSuchFileException ignored) {
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return Collections.emptyList();
     }
 }
