@@ -39,14 +39,18 @@ class SwingUI implements UI {
     }
 
     @Override
-    public void displayHitOrMiss(boolean hit) throws InterruptedException, InvocationTargetException {
-        SwingUtilities.invokeAndWait(() ->
-                JOptionPane.showMessageDialog(
-                        null,
-                        hit ? "Hit" : "Miss",
-                        "Prediction Result",
-                        hit ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE
-                )
-        );
+    public void displayHitOrMiss(boolean hit) {
+        try {
+            SwingUtilities.invokeAndWait(() ->
+                    JOptionPane.showMessageDialog(
+                            null,
+                            hit ? "Hit" : "Miss",
+                            "Prediction Result",
+                            hit ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE
+                    )
+            );
+        } catch (InterruptedException | InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
