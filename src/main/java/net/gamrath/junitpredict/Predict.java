@@ -40,7 +40,6 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
         resultByTestName.put(uniqueId, testFailed ? TestResult.FAIL : TestResult.PASS);
     }
 
-    @SuppressWarnings("CallToPrintStackTrace")
     @Override
     public void afterAll(ExtensionContext context) {
         final var testClass = context.getRequiredTestClass().getCanonicalName();
@@ -80,6 +79,7 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
         }
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     private static List<String> readLogFile(Path logPath) {
         List<String> lines = Collections.emptyList();
         try {
