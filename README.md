@@ -9,7 +9,7 @@ A JUnit 5 extension for teaching predictive test-driven development (TDD).
 <dependency>
     <groupId>net.gamrath</groupId>
     <artifactId>junit-predict</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
 </dependency>
 ```
 
