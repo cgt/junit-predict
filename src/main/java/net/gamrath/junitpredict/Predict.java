@@ -61,6 +61,10 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
 
     @Override
     public void afterTestExecution(ExtensionContext context) {
+        recordTestResults(context);
+    }
+
+    private void recordTestResults(ExtensionContext context) {
         final var uniqueId = context.getUniqueId();
         final var testFailed = context.getExecutionException().isPresent();
         resultByTestName.put(uniqueId, testFailed ? TestResult.FAIL : TestResult.PASS);
