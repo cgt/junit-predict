@@ -28,10 +28,6 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
 
     @Override
     public void beforeAll(ExtensionContext context) throws Exception {
-        promptForPrediction();
-    }
-
-    private void promptForPrediction() throws InterruptedException, InvocationTargetException {
         this.prediction = promptForPrediction2();
     }
 
