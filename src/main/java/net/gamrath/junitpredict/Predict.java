@@ -43,17 +43,15 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
                 new Object[]{"FAIL", "PASS"},
                 null
         );
-        Prediction prediction;
         if (result == 0) {
-            prediction = Prediction.ANY_FAIL;
+            return Prediction.ANY_FAIL;
         } else if (result == 1) {
-            prediction = Prediction.ALL_PASS;
+            return Prediction.ALL_PASS;
         } else if (result == JOptionPane.CLOSED_OPTION) {
-            prediction = Prediction.SKIP;
+            return Prediction.SKIP;
         } else {
             throw new IllegalStateException("No prediction made. result=%d".formatted(result));
         }
-        return prediction;
     }
 
     @Override
