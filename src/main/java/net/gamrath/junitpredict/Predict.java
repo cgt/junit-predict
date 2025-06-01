@@ -120,7 +120,7 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
         }
     }
 
-    private static void displayHitOrMissDialog(boolean hit) throws InterruptedException, InvocationTargetException {
+    private void displayHitOrMissDialog(boolean hit) throws InterruptedException, InvocationTargetException {
         SwingUtilities.invokeAndWait(() ->
                 JOptionPane.showMessageDialog(
                         null,
