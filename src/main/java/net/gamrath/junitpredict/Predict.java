@@ -6,7 +6,6 @@ import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
@@ -26,7 +25,7 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
     private Prediction prediction = null;
 
     @Override
-    public void beforeAll(ExtensionContext context) throws Exception {
+    public void beforeAll(ExtensionContext context) {
         this.prediction = ui.promptForPrediction();
     }
 
@@ -43,7 +42,7 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
 
     @SuppressWarnings("CallToPrintStackTrace")
     @Override
-    public void afterAll(ExtensionContext context) throws InterruptedException, InvocationTargetException {
+    public void afterAll(ExtensionContext context) {
         final var testClass = context.getRequiredTestClass().getCanonicalName();
         final var logPath = Path.of("predictions-%s.csv".formatted(testClass));
 
