@@ -56,7 +56,8 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
             }
             p.set(result);
         });
-        this.prediction = p.get();
+        final var prediction1 = p.get();
+        this.prediction = prediction1;
     }
 
     @Override
