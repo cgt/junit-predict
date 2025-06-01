@@ -16,11 +16,16 @@ public class Logger {
                 misses++;
             }
         }
+        if (hit) {
+            hits++;
+        } else {
+            misses++;
+        }
 
         final var log = formatLogLine(prediction, hit);
         final var newLines = new ArrayList<>(lines);
         newLines.add(log);
-        newLines.add(formatStatsLine(hits + (hit ? 1 : 0), misses + (hit ? 0 : 1)));
+        newLines.add(formatStatsLine(hits, misses));
         return newLines;
     }
 
