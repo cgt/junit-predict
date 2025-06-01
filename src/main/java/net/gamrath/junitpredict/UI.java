@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 class UI {
     Prediction promptForPrediction2() throws InterruptedException, InvocationTargetException {
-        var p = new AtomicReference<Prediction>();
+        var prediction = new AtomicReference<Prediction>();
         SwingUtilities.invokeAndWait(() -> {
             final var choice = JOptionPane.showOptionDialog(
                     null,
@@ -28,9 +28,9 @@ class UI {
             } else {
                 throw new IllegalStateException("No prediction made. result=%d".formatted(choice));
             }
-            p.set(result);
+            prediction.set(result);
         });
-        return p.get();
+        return prediction.get();
     }
 
     void displayHitOrMissDialog(boolean hit) throws InterruptedException, InvocationTargetException {
