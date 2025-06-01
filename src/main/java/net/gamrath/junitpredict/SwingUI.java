@@ -9,6 +9,7 @@ class SwingUI implements UI {
     public Prediction promptForPrediction() {
         final var prediction = new AtomicReference<Prediction>();
         invokeUnchecked(() -> {
+            final var options = new String[]{"FAIL", "PASS"};
             final var choice = JOptionPane.showOptionDialog(
                     null,
                     "Do you predict that ALL tests will PASS or that ANY will FAIL?",
@@ -16,7 +17,7 @@ class SwingUI implements UI {
                     JOptionPane.DEFAULT_OPTION,
                     JOptionPane.QUESTION_MESSAGE,
                     null,
-                    new Object[]{"FAIL", "PASS"},
+                    options,
                     null
             );
             Prediction result;
