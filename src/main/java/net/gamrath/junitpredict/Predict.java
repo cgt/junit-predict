@@ -68,8 +68,8 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
         writeLogFile(logPath, newLines);
     }
 
-    private static String formatStatsLine(final int hits, final int misses2) {
-        return "STATS: hits=%d, misses=%d".formatted(hits, misses2);
+    private static String formatStatsLine(final int hits, final int misses) {
+        return "STATS: hits=%d, misses=%d".formatted(hits, misses);
     }
 
     @SuppressWarnings("CallToPrintStackTrace")
