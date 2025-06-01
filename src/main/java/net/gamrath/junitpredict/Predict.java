@@ -65,6 +65,10 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
         final var newLines = new ArrayList<>(lines);
         newLines.add(log);
         newLines.add("STATS: hits=%d, misses=%d".formatted(hits + (hit ? 1 : 0), misses + (hit ? 0 : 1)));
+        writeLogFile(logPath, newLines);
+    }
+
+    private static void writeLogFile(Path logPath, ArrayList<String> newLines) {
         try {
             Files.writeString(
                     logPath,
