@@ -7,6 +7,7 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 
 import javax.swing.*;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
@@ -27,6 +28,10 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
 
     @Override
     public void beforeAll(ExtensionContext context) throws Exception {
+        promptForPrediction2();
+    }
+
+    private void promptForPrediction2() throws InterruptedException, InvocationTargetException {
         var p = new AtomicReference<Prediction>();
         SwingUtilities.invokeAndWait(() ->
                 p.set(promptForPrediction())
