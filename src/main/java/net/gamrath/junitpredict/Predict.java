@@ -37,6 +37,7 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
                     new Object[]{"FAIL", "PASS"},
                     null
             );
+            Prediction prediction;
             if (result == 0) {
                 prediction = Prediction.ANY_FAIL;
             } else if (result == 1) {
@@ -46,6 +47,7 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
             } else {
                 throw new IllegalStateException("No prediction made. result=%d".formatted(result));
             }
+            this.prediction = prediction;
         });
     }
 
