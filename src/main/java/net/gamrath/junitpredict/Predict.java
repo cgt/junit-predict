@@ -28,10 +28,10 @@ public class Predict implements BeforeAllCallback, AfterTestExecutionCallback, A
 
     @Override
     public void beforeAll(ExtensionContext context) throws Exception {
-        promptForPrediction2();
+        promptForPrediction();
     }
 
-    private void promptForPrediction2() throws InterruptedException, InvocationTargetException {
+    private void promptForPrediction() throws InterruptedException, InvocationTargetException {
         var p = new AtomicReference<Prediction>();
         SwingUtilities.invokeAndWait(() -> {
             final var choice = JOptionPane.showOptionDialog(null, "Do you predict that ALL tests will PASS or that ANY will FAIL?", "Call your shot!", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"FAIL", "PASS"}, null);
